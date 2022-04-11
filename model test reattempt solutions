@@ -1,0 +1,224 @@
+1st Question
+app.component.html
+
+<div class="panel panel-default" style="width:900px">
+  <div class="panel-body">
+    <div class="card" style="margin-left:400px; margin-top:50px">
+       <img [src]="imageLocation" width="100%" height="50%" style="padding:15px">
+      <div class="card-body">
+       <h4>Category : {{productTitle}}</h4>
+       <h4>Category : {{productPrice | currency:"INR"}}</h4>
+       <h4>Category : {{stock}}</h4>
+      </div>
+   
+      <button type="button" style="background-color:green;color:whitesmoke;width:150px;margin-left:180px;margin-bottom:20px">ADD TO CART</button>
+   </div>
+   </div>
+ 
+ 
+ </div>
+ 
+ 
+ app.component.ts
+ 
+ import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  productTitle:string="SAMSUNG";
+  productPrice:number=12000;
+  stock:number=5;
+  imageLocation:string="../assets/sg.png"
+}
+
+3rd question
+
+<div class="container">
+  <h3>PRODUCT DETAILS</h3>
+  <form [formGroup]="myform" (ngSubmit)="store()">
+    <div class="form-group" >
+      <label for="pname">PRODUCT NAME</label>
+      <input type="text" class="form-control" id="pname"  formControlName="pname">
+      <small style="color:red" *ngIf="eid && pname.invalid && pname.touched">*NAME IS REQUIRED</small>
+       
+    </div>
+    <div class="form-group">
+      <label for="pbrand">PRODUCT BRAND</label>
+      <input type="text" class="form-control" id="pbrand" formControlName="pbrand">
+      <div *ngIf="pbrand.touched && pbrand.invalid">
+      <small style="color:red" *ngIf="pbrand.errors.required">*BRAND IS REQUIRED</small><br/>
+
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="pprice">PRODUCT PRICE</label>
+      <input type="text" class="form-control" id="pprice" formControlName="pprice">
+      <div *ngIf="pprice.touched && pprice.invalid">
+        <small style="color:red" *ngIf="pprice.errors.required">*PRICE IS REQUIRED</small><br/>
+          </div>
+     </div>
+     <button class="btn btn-primary" [disabled]="emsform.invalid">STORE</button>
+  </form>
+</div>
+<table border="1" width="100%"></table>
+<div style="margin-top:10px;">
+          <div class="product details">
+            <table class="table">
+              <thead class="thed-light">
+                <tr>
+                  <td>PRODUCT NAME</td>
+                  <td>PRODUCT BRAND</td>
+                  <td>PRODUCT PRICE</td>
+                </tr>
+                <tr *ngFor="let emp of employees">
+                  <td>{{prd.pname}}</td>
+                  <td>{{prd.pbrand}}</td>
+                  <td>{{prd.pprice}}</td>
+            </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{pname}}</td>
+                  <td>{{pbrand}}</td>
+                  <td>{{pprice}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+</div>
+
+question-3
+
+app.component.html
+
+<div class="container">
+  <h3>PRODUCT DETAILS</h3>
+  <form [formGroup]="myform" (ngSubmit)="store()">
+    <div class="form-group" >
+      <label for="pname">PRODUCT NAME</label>
+      <input type="text" class="form-control" id="pname"  formControlName="pname">
+      <small style="color:red" *ngIf="eid && pname.invalid && pname.touched">*NAME IS REQUIRED</small>
+       
+    </div>
+    <div class="form-group">
+      <label for="pbrand">PRODUCT BRAND</label>
+      <input type="text" class="form-control" id="pbrand" formControlName="pbrand">
+      <div *ngIf="pbrand.touched && pbrand.invalid">
+      <small style="color:red" *ngIf="pbrand.errors.required">*BRAND IS REQUIRED</small><br/>
+
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="pprice">PRODUCT PRICE</label>
+      <input type="text" class="form-control" id="pprice" formControlName="pprice">
+      <div *ngIf="pprice.touched && pprice.invalid">
+        <small style="color:red" *ngIf="pprice.errors.required">*PRICE IS REQUIRED</small><br/>
+          </div>
+     </div>
+     <button class="btn btn-primary" [disabled]="emsform.invalid">STORE</button>
+  </form>
+</div>
+<table border="1" width="100%"></table>
+<div style="margin-top:10px;">
+          <div class="product details">
+            <table class="table">
+              <thead class="thed-light">
+                <tr>
+                  <td>PRODUCT NAME</td>
+                  <td>PRODUCT BRAND</td>
+                  <td>PRODUCT PRICE</td>
+                </tr>
+                <tr *ngFor="let emp of employees">
+                  <td>{{prd.pname}}</td>
+                  <td>{{prd.pbrand}}</td>
+                  <td>{{prd.pprice}}</td>
+            </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{pname}}</td>
+                  <td>{{pbrand}}</td>
+                  <td>{{pprice}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+</div>
+
+app.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent  implements OnInit{
+  title = 'form';
+  loginForm!: FormGroup;
+
+  constructor(private fb: FormBuilder) {}
+
+  
+  data:any = [];
+  showData: boolean = false;
+
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      productName: [null, [Validators.required]],
+      productBrand: [null, [Validators.required]],
+      productPrice: [null, [Validators.required]],
+    }); 
+  }
+
+  get name() {
+    return this.loginForm.get('productName')?.value;
+  }
+  
+  get brand() {
+    return this.loginForm.get('productBrand')?.value;
+  }
+
+  get price() {
+    return this.loginForm.get('productPrice')?.value;
+  }
+
+  store() {
+    this.showData = true;
+    this.data.push({
+      "pname"  : this.name,
+      "pbrand" : this.brand,
+      "pprice" : this.price
+    });
+  }
+}
+
+
+app.module.ts
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import {HttpClientModule} from "@angular/common/http";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,HttpClientModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
